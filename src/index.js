@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -16,9 +16,7 @@ ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <SnackbarProvider anchorOrigin={notificationPlacement} maxSnack={2}>
-                <Suspense fallback={<div></div>}>
-                    <App />
-                </Suspense>
+                <App />
             </SnackbarProvider>
         </Provider>
     </React.StrictMode>,

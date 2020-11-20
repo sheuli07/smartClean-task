@@ -1,12 +1,13 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import Topnav from "../topnav/topnav";
-import TableView from "../widget/tableView";
+import Loader from "../loader/loader";
 
+const TableView = lazy(() => import("../widget/tableView"));
 const LineChart = lazy(() => import("../widget/lineChart"));
 const AreaChart = lazy(() => import("../widget/areaChart"));
 const BarChart = lazy(() => import("../widget/barChart"));
@@ -77,18 +78,20 @@ export default function VerticalTabs() {
                     <Tab label="Area chart" {...a11yProps(2)} />
                     <Tab label="Bar Chart" {...a11yProps(3)} />
                 </Tabs>
-                <TabPanel value={value} index={0}>
-                    <TableView />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <LineChart />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <AreaChart />
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    <BarChart />
-                </TabPanel>
+                <Suspense fallback={<Loader />}>
+                    <TabPanel value={value} index={0}>
+                        <TableView />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <LineChart />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <AreaChart />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        <BarChart />
+                    </TabPanel>
+                </Suspense>
             </div>
         </>
     );
